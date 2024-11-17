@@ -114,3 +114,4 @@ workflows:
                 - develop
                 - staging
                 - master
+                
