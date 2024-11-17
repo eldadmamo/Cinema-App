@@ -49,16 +49,13 @@ jobs:
       - run:
         name: Deploy to AWS S3
         command: |
-          if [ "${CURRENT_BRANCH}" == "master" ]
-          then
-            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
-          elif [ "${CURRENT_BRANCH}" === "staging"]
-          then
-            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
-          else
-            aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_DEV_BUCKET} --delete
-          fi
-
+          if [ "${CURRENT_BRANCH}" = "master" ]; then
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
+            elif [ "${CURRENT_BRANCH}" = "staging" ]; then
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
+            else
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_DEV_BUCKET} --delete
+            fi
 
   deploy-to-aws-cloudfront:
     docker:
@@ -75,7 +72,7 @@ jobs:
         command: |
           sudo apt-get -y -qq update
           sudo apt-get install -y awscli
-          sudo apt-get install -y python-pip python-dev build essential
+          sudo apt-get install -y python-pip python-dev build-essential
       - run:
         name: Build Project
         command: |
@@ -87,16 +84,13 @@ jobs:
       - run:
         name: Deploy to AWS Cloudfront
         command: |
-          aws configure set preview.cloudfront
-          if [ "${CURRENT_BRANCH}" == "master" ]
-          then
-            aws cloudfront create-invalidation -distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths /\*
-          elif [ "${CURRENT_BRANCH}" === "staging"]
-          then
-            aws cloudfront create-invalidation -distribution-id ${STAGING_DISTRIBUTION_ID} --paths /\*
-          else
-            aws cloudfront create-invalidation -distribution-id ${DEV_DESTRIBUTION_ID} --paths /\*
-          fi
+          if [ "${CURRENT_BRANCH}" = "master" ]; then
+              aws cloudfront create-invalidation --distribution-id ${PRODUCTION_DISTRIBUTION_ID} --paths "/*"
+            elif [ "${CURRENT_BRANCH}" = "staging" ]; then
+              aws cloudfront create-invalidation --distribution-id ${STAGING_DISTRIBUTION_ID} --paths "/*"
+            else
+              aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths "/*"
+            fi
              
 workflows:
   build_and_deploy:
