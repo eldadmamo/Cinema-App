@@ -49,7 +49,7 @@ jobs:
       - *show-current-branch-name
       - *restore-cache
       - *install-dependencies
-      - *save_cache
+      - *save-cache
   
   linting:
     executor: app-executor
