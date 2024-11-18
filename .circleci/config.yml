@@ -128,7 +128,7 @@ jobs:
           template: ''
           custom: |
             {
-             "blocks":[
+             "blocks": [
                 {
                   "type": "header"
                   "text": {
@@ -139,7 +139,7 @@ jobs:
                 },
                 {
                   "type": "section"
-                  fields: [
+                  "fields" : [
                     {
                       "type":"mrkdwn",
                       "text": "*Project*:\n$CIRCLE_PROJECT_REPONAME"
