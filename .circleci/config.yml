@@ -130,37 +130,37 @@ jobs:
             {
              "blocks": [
                 {
-                  "type": "header"
+                  "type": "header",
                   "text": {
-                     "type": "plain_text",
-                     "text": "${CIRCLE_BRANCH} branch deploymemt to aws s3 and cloudfront is complete. 👍",
-                     "emoji": true  
+                    "type": "plain_text",
+                    "text": "${CIRCLE_BRANCH} branch deployment to AWS S3 and CloudFront is complete. 👍",
+                    "emoji": true
                   }
                 },
                 {
-                  "type": "section"
-                  "fields" : [
+                  "type": "section",
+                  "fields": [
                     {
-                      "type":"mrkdwn",
-                      "text": "*Project*:\n$CIRCLE_PROJECT_REPONAME"
+                      "type": "mrkdwn",
+                      "text": "*Project*:\\n${CIRCLE_PROJECT_REPONAME}"
                     },
                     {
-                      "type":"mrkdwn",
-                      "text": "*Branch*:\n$CIRCLE_BRANCH"
+                      "type": "mrkdwn",
+                      "text": "*Branch*:\\n${CIRCLE_BRANCH}"
                     },
                     {
-                      "type":"mrkdwn",
-                      "text": "*When*:\n$(date + '%m/%d/%Y %T')"
+                      "type": "mrkdwn",
+                      "text": "*When*:\\n$(date +'%m/%d/%Y %T')"
                     },
                     {
-                      "type":"mrkdwn",
-                      "text": "*Build*:\n$CIRCLE_BUILD_NUM"
+                      "type": "mrkdwn",
+                      "text": "*Build*:\\n${CIRCLE_BUILD_NUM}"
                     },
                     {
-                      "type":"mrkdwn",
-                      "text": "*Author*:\n$CIRCLE_PROJECT_USERNAME"
+                      "type": "mrkdwn",
+                      "text": "*Author*:\\n${CIRCLE_PROJECT_USERNAME}"
                     }
-                    ]
+                  ]
                 },
                 {
                   "type": "actions",
@@ -168,12 +168,12 @@ jobs:
                     {
                       "type": "button",
                       "text": {
-                          "type": "plain_text",
-                          "text": "View Job"
-                        },
-                        "url":"${CIRCLE_BUILD_URL}"
+                        "type": "plain_text",
+                        "text": "View Job"
+                      },
+                      "url": "${CIRCLE_BUILD_URL}"
                     }
-                    ]
+                  ]
                 }
               ]
             }
