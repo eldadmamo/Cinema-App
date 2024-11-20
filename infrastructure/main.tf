@@ -1,5 +1,4 @@
 provider "aws" {
-  profile = "eldadfikre"
   region  = "eu-central-1"
 }
 
