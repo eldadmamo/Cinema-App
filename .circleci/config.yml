@@ -276,7 +276,7 @@ workflows:
                 - develop
                 - staging
                 - master
-       - terraform-plan-and-apply:
+      - terraform-plan-and-apply:
           requires:
             - terraform-validate
           filters:
