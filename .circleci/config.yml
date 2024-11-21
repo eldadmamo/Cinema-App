@@ -145,12 +145,12 @@ jobs:
             echo $AWS_BUCKET_NAME
             if [ "${CIRCLE_BRANCH}" == "master" ] 
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete 
+              aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete 
             elif [ "${CIRCLE_BRANCH}" == "staging" ] 
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete 
+              aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete 
             else
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_NAME} --delete 
+              aws --region ${AWS_REGION} s3 sync ~/repo/dist s3://${AWS_BUCKET_NAME} --delete 
             fi
 
   deploy-to-aws-cloudfront:
@@ -163,7 +163,7 @@ jobs:
       - *install-aws-cli
       - *build-project
       - run:
-          name: Deploy to AWS CloudFronts
+          name: Deploy to AWS CloudFront
           command: |
             CLOUDFRONT_DISTRIBUTION_ID=$(cat artifacts/cloudfront_distribution_id.txt | sed 's/\"//g')
             echo $CLOUDFRONT_DISTRIBUTION_ID
