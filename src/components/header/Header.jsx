@@ -28,6 +28,7 @@ const HEADER_LIST = [
     type: 'upcoming'
   }
 ];
+
 const Header = () => {
   let [navClass, setNavClass] = useState(false);
   let [menuClass, setMenuClass] = useState(false);
