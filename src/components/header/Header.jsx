@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import logo from '../assets/react.svg';
-import '../components/header/Header.scss';
+import logo from '../../assets/Cinema.jpg';
+import '../header/Header.scss';
 
 const HEADER_LIST = [
   {
