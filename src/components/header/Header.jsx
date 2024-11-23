@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import logo from '../assets/cinema.jpg';
-import '../components/header/Header.scss';
+import logo from '../../assets/Cinema.jpg';
+import '../header/Header.scss';
 
 const HEADER_LIST = [
   {
@@ -28,6 +28,7 @@ const HEADER_LIST = [
     type: 'upcoming'
   }
 ];
+
 const Header = () => {
   let [navClass, setNavClass] = useState(false);
   let [menuClass, setMenuClass] = useState(false);
@@ -50,7 +51,7 @@ const Header = () => {
         <div className="header-bar"></div>
         <div className="header-navbar">
           <div className="header-image">
-            <img src={logo} className='' alt="" />
+            <img src={logo} alt="" />
           </div>
           <div
             className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`}
