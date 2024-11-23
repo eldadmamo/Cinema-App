@@ -71,7 +71,7 @@ const Header = () => {
                 <span className="header-list-name">{data.name}</span>
               </li>
             ))}
-            <input className="search-input" type="text" placeholder="Search for a movie" />
+            <input className="search-input" type="text" placeholder="Search for movie" />
           </ul>
         </div>
       </div>
