@@ -1,19 +1,17 @@
-import { useState } from 'react';
 import { Provider } from 'react-redux';
-
-import './App.css';
+import './App.scss';
 import store from './redux/store';
+import Header from './components/Header';
 
 const App = () => {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-    <Provider store={store}>
-    <div>
-        <h1>Simple React Redux</h1>
-    </div>
-    </Provider>
+      <Provider store={store}>
+        <Header />
+        <div>
+          <h1>Simple React Redux</h1>
+        </div>
+      </Provider>
     </>
   );
 };
