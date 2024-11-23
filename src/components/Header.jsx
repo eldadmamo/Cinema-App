@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import logo from '../assets/react.svg';
+import logo from '../assets/cinema.jpg';
 import '../components/header/Header.scss';
 
 const HEADER_LIST = [
@@ -50,7 +50,7 @@ const Header = () => {
         <div className="header-bar"></div>
         <div className="header-navbar">
           <div className="header-image">
-            <img src={logo} alt="" />
+            <img src={logo} className='' alt="" />
           </div>
           <div
             className={`${menuClass ? 'header-menu-toggle is-active' : 'header-menu-toggle'}`}
