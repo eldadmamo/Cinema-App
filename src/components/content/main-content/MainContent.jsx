@@ -18,7 +18,7 @@ const MainContent = () => {
       <Slideshow images={images} auto={true} showArrows={true} />
       <div className="grid-movie-title">
         <div className="movieType">Now Playing</div>
-        <div className="paginate">Paginate</div>
+        <div className="paginate">Pagination</div>
       </div>
     </div>
   );
