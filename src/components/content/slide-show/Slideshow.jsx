@@ -12,7 +12,6 @@ const Slideshow = (props) => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderInterval, setSliderInterval] = useState(0);
-
   const { slideShow, slideIndex } = state;
   let currentSlideIndex = 0;
 
