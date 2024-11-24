@@ -4,14 +4,13 @@ import store from './redux/store';
 import Header from './components/header/Header';
 import Main from './components/main/main';
 
-
 const App = () => {
   return (
     <>
       <Provider store={store}>
         <Header />
         <div>
-          <Main/>
+          <Main />
         </div>
       </Provider>
     </>
