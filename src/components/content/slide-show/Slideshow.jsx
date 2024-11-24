@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 import '../slide-show/Slideshow.scss';
 
 const Slideshow = (props) => {
