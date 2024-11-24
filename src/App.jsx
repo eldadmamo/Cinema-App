@@ -4,6 +4,7 @@ import store from './redux/store';
 import Header from './components/header/Header';
 import MainContent from './components/content/main-content/MainContent';
 
+
 const App = () => {
   return (
     <>
