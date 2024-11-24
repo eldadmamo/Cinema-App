@@ -10,7 +10,7 @@ const App = () => {
       <Provider store={store}>
         <Header />
         <div>
-          <MainContent/>
+          <MainContent />
         </div>
       </Provider>
     </>
