@@ -16,15 +16,15 @@ const MainContent = () => {
     }
   ];
 
-  const [currentPage, setCurrentPage]= useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const paginate = (type) => {
-    if(type === 'prev' && currentPage > 1){
-      setCurrentPage((prev) => prev - 1)
+    if (type === 'prev' && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
     } else {
       setCurrentPage((prev) => prev + 1);
     }
-  }
+  };
 
   return (
     <div className="main-content">
