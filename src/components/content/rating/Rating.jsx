@@ -2,7 +2,7 @@ import '../rating/Rating.scss';
 import PropTypes from 'prop-types';
 import { Fragment, useEffect, useRef, useState } from 'react';
 
-const Rating = ({rating, totalStars, className}) => {
+const Rating = ({ rating, totalStars, className }) => {
   const [numberOfStars, setNumberOfStars] = useState();
   const ratingRef = useRef();
 
