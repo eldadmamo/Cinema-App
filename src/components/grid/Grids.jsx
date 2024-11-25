@@ -1,7 +1,7 @@
 import Rating from '../content/rating/Rating';
-import '../grid/Grid.scss';
+import '../grid/Grids.scss';
 
-const Grid = (props) => {
+const Grids = (props) => {
   const { images } = props;
   return (
     <>
@@ -28,4 +28,4 @@ const Grid = (props) => {
   );
 };
 
-export default Grid;
+export default Grids;
