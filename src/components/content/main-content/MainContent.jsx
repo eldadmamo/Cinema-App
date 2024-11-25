@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../../content/main-content/MainContent.scss';
 import Paginate from '../paginate/Paginate';
 import Slideshow from '../slide-show/Slideshow';
-import Grid from '../../grid/grid';
+import Grids from '../../grid/Grids';
 
 const MainContent = () => {
   const images = [
@@ -51,7 +51,7 @@ const MainContent = () => {
           <Paginate currentPage={currentPage} totalPages={10} paginate={paginate} />
         </div>
       </div>
-      <Grid images={images} />
+      <Grids images={images} />
     </div>
   );
 };
