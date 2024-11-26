@@ -1,59 +1,95 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import '../../content/main-content/MainContent.scss';
 import Paginate from '../paginate/Paginate';
 import Slideshow from '../slide-show/Slideshow';
 import Grids from '../../grid/Grids';
+import PropTypes from 'prop-types';
+import { IMAGE_URL } from '../../../services/movies.service';
+import { getMovies, setResponsePageNumber } from '../../../redux/actions/movies';
 
-const MainContent = () => {
-  const images = [
-    {
-      url: 'https://cdn.britannica.com/35/201735-050-0B3066E6/Scene-The-Lord-of-the-Rings-Fellowship.jpg',
-      rating: 7.5
-    },
-    {
-      url: 'https://hips.hearstapps.com/vidthumb/images/harrypottercast-1612558672.jpg?crop=1.00xw:1.00xh;0,0&resize=1200:*',
-      rating: 8.5
-    },
-    {
-      url: 'https://4kwallpapers.com/images/wallpapers/captain-america-marvel-superheroes-3440x1440-663.jpg',
-      rating: 7.8
-    },
-    {
-      url: 'https://cdn.britannica.com/35/201735-050-0B3066E6/Scene-The-Lord-of-the-Rings-Fellowship.jpg',
-      rating: 9.7
-    },
-    {
-      url: 'https://hips.hearstapps.com/vidthumb/images/harrypottercast-1612558672.jpg?crop=1.00xw:1.00xh;0,0&resize=1200:*',
-      rating: 6.5
-    },
-    {
-      url: 'https://4kwallpapers.com/images/wallpapers/captain-america-marvel-superheroes-3440x1440-663.jpg',
-      rating: 8.5
+const MainContent = (props) => {
+  const { list, movieType, totalPages, page, getMovies, setResponsePageNumber } = props;
+
+  const [currentPage, setCurrentPage] = useState(page);
+  const [images, setImages] = useState([]);
+  const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4);
+
+  const HEADER_TYPE = {
+    now_playing: 'Now Playing',
+    popular: 'Popular',
+    top_rated: 'Top Rated',
+    upcoming: 'Upcoming'
+  };
+
+  useEffect(() => {
+    if (randomMovies.length) {
+      const IMAGES = [
+        {
+          id: 1,
+          url: `${IMAGE_URL}/${randomMovies[0].backdrop_path}`
+        },
+        {
+          id: 2,
+          url: `${IMAGE_URL}/${randomMovies[1].backdrop_path}`
+        },
+        {
+          id: 3,
+          url: `${IMAGE_URL}/${randomMovies[2].backdrop_path}`
+        },
+        {
+          id: 4,
+          url: `${IMAGE_URL}/${randomMovies[3].backdrop_path}`
+        }
+      ];
+      setImages(IMAGES);
     }
-  ];
+  }, []);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    setCurrentPage(page);
+  }, [page, totalPages]);
 
   const paginate = (type) => {
-    if (type === 'prev' && currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
+    let pageNumber = currentPage;
+    if (type === 'prev' && currentPage >= 1) {
+      pageNumber -= 1;
     } else {
-      setCurrentPage((prev) => prev + 1);
+      pageNumber += 1;
     }
+    setCurrentPage(pageNumber);
+    setResponsePageNumber(pageNumber, totalPages);
+    getMovies(movieType, pageNumber);
   };
 
   return (
     <div className="main-content">
       <Slideshow images={images} auto={true} showArrows={true} />
       <div className="grid-movie-title">
-        <div className="movieType">Now Playing</div>
+        <div className="movieType">{HEADER_TYPE[movieType]}</div>
         <div className="paginate">
-          <Paginate currentPage={currentPage} totalPages={10} paginate={paginate} />
+          <Paginate currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
         </div>
       </div>
-      <Grids images={images} />
+      <Grids />
     </div>
   );
 };
 
-export default MainContent;
+MainContent.propTypes = {
+  list: PropTypes.array.isRequired,
+  movieType: PropTypes.string.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  getMovies: PropTypes.func.isRequired,
+  setResponsePageNumber: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  list: state.movies.list,
+  movieType: state.movies.movieType,
+  totalPages: state.movies.totalPages,
+  page: state.movies.page
+});
+
+export default connect(mapStateToProps, { getMovies, setResponsePageNumber })(MainContent);

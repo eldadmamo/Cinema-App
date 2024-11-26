@@ -15,6 +15,11 @@ const Slideshow = (props) => {
   let currentSlideIndex = 0;
 
   useEffect(() => {
+    setState({
+      ...state,
+      slideIndex: 0,
+      slideShow: images[0]
+    });
     if (auto) {
       const timeInterval = setInterval(() => {
         autoMoveSlide();
@@ -22,11 +27,11 @@ const Slideshow = (props) => {
       setSliderInterval(timeInterval);
 
       return () => {
-        clearInterval(sliderInterval);
         clearInterval(timeInterval);
+        clearInterval(sliderInterval);
       };
     }
-  }, []);
+  }, [images]);
 
   const autoMoveSlide = () => {
     let lastIndex = 0;
@@ -80,7 +85,7 @@ const Slideshow = (props) => {
 
   const Indicators = (props) => {
     const { currentSlide } = props;
-    const listIndicators = images.map((_, i) => {
+    const listIndicators = images.map((slide, i) => {
       const buttonClasses =
         i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
       return <button className={buttonClasses} key={i} />;
