@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import { loadMoreMovies, setResponsePageNumber } from '../../redux/actions/movies';
 import '../home/Home.scss';
 import PropTypes from 'prop-types';
+import SearchResult from '../content/search-result/SearchResult';
 
 const Home = (props) => {
-  const { loadMoreMovies, page, totalPages, setResponsePageNumber, movieType } = props;
+  const { loadMoreMovies, page, totalPages, setResponsePageNumber, movieType, searchResult } =
+    props;
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(page);
   const mainRef = useRef();
@@ -23,7 +25,7 @@ const Home = (props) => {
   useEffect(() => {
     setResponsePageNumber(currentPage, totalPages);
     // loadMoreMovies('now_playing',currentPage);
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, setResponsePageNumber]);
 
   const fetchData = () => {
     let pageNumber = currentPage;
@@ -46,7 +48,11 @@ const Home = (props) => {
 
   return (
     <div className="main" ref={mainRef} onScroll={() => handleScroll()}>
-      {loading ? <Spinner /> : <MainContent />}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>{searchResult && searchResult.length === 0 ? <MainContent /> : <SearchResult />}</>
+      )}
       <div ref={bottomLineRef}></div>
     </div>
   );
@@ -58,14 +64,19 @@ Home.propTypes = {
   totalPages: PropTypes.number,
   loadMoreMovies: PropTypes.func,
   setResponsePageNumber: PropTypes.func,
-  movieType: PropTypes.string
+  movieType: PropTypes.string,
+  searchResult: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   list: state.movies.list,
   page: state.movies.page,
   totalPages: state.movies.totalPages,
-  movieType: state.movies.movieType
+  movieType: state.movies.movieType,
+  searchResult: state.movies.searchResult
 });
 
-export default connect(mapStateToProps, { loadMoreMovies, setResponsePageNumber })(Home);
+export default connect(mapStateToProps, {
+  loadMoreMovies,
+  setResponsePageNumber
+})(Home);
