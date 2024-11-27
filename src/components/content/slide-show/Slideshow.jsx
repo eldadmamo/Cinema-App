@@ -8,9 +8,9 @@ const Slideshow = (props) => {
     slideShow: images[0],
     slideIndex: 0
   });
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderInterval, setSliderInterval] = useState(0);
+
   const { slideShow, slideIndex } = state;
   let currentSlideIndex = 0;
 
@@ -31,6 +31,8 @@ const Slideshow = (props) => {
         clearInterval(sliderInterval);
       };
     }
+
+    // eslint-disable-next-line
   }, [images]);
 
   const autoMoveSlide = () => {
@@ -86,27 +88,28 @@ const Slideshow = (props) => {
   const Indicators = (props) => {
     const { currentSlide } = props;
     const listIndicators = images.map((slide, i) => {
-      const buttonClasses =
+      const btnClasses =
         i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
-      return <button className={buttonClasses} key={i} />;
+      return <button className={btnClasses} key={i} />;
     });
     return <div className="slider-nav">{listIndicators}</div>;
   };
 
   return (
-    <div className="slider">
-      <div className="slider-slides">
-        {images && images.length && slideShow && (
-          <div
-            className="slider-image"
-            style={{ backgroundImage: `url(${images[slideIndex].url})` }}
-          ></div>
-        )}
+    <>
+      <div className="slider">
+        <div className="slider-slides">
+          {images && images.length && slideShow && (
+            <div
+              className="slider-image"
+              style={{ backgroundImage: `url(${slideShow.url})` }}
+            ></div>
+          )}
+        </div>
+        <Indicators currentSlide={slideIndex} />
+        {showArrows ? <RenderArrows /> : null}
       </div>
-      <Indicators currentSlide={slideIndex} />
-      {showArrows ? <RenderArrows /> : null}
-      <RenderArrows />
-    </div>
+    </>
   );
 };
 

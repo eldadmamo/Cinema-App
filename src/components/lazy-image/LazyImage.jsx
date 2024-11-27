@@ -57,7 +57,8 @@ const LazyImage = (props) => {
 LazyImage.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string,
-  children: PropTypes.any
+  children: PropTypes.any,
+  className: PropTypes.string
 };
 
 export default LazyImage;

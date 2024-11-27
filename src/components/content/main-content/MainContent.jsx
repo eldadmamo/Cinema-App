@@ -10,7 +10,6 @@ import { getMovies, setResponsePageNumber } from '../../../redux/actions/movies'
 
 const MainContent = (props) => {
   const { list, movieType, totalPages, page, getMovies, setResponsePageNumber } = props;
-
   const [currentPage, setCurrentPage] = useState(page);
   const [images, setImages] = useState([]);
   const randomMovies = list.sort(() => Math.random() - Math.random()).slice(0, 4);
@@ -27,27 +26,36 @@ const MainContent = (props) => {
       const IMAGES = [
         {
           id: 1,
-          url: `${IMAGE_URL}/${randomMovies[0].backdrop_path}`
+          url: `${IMAGE_URL}${randomMovies[0].backdrop_path}`
         },
         {
           id: 2,
-          url: `${IMAGE_URL}/${randomMovies[1].backdrop_path}`
+          url: `${IMAGE_URL}${randomMovies[1].backdrop_path}`
         },
         {
           id: 3,
-          url: `${IMAGE_URL}/${randomMovies[2].backdrop_path}`
+          url: `${IMAGE_URL}${randomMovies[2].backdrop_path}`
         },
         {
           id: 4,
-          url: `${IMAGE_URL}/${randomMovies[3].backdrop_path}`
+          url: `${IMAGE_URL}${randomMovies[3].backdrop_path}`
         }
       ];
       setImages(IMAGES);
     }
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
+    setCurrentPage(1); // Reset to page 1 when movieType changes
+    getMovies(movieType, 1);
+    setResponsePageNumber(1, totalPages);
+    // eslint-disable-next-line
+  }, [movieType]);
+
+  useEffect(() => {
     setCurrentPage(page);
+    // eslint-disable-next-line
   }, [page, totalPages]);
 
   const paginate = (type) => {

@@ -4,7 +4,7 @@
       "es6": true
     },
     "extends": [
-      "eslint:recommended",
+      "eslint:react/recommended",
       "standard"
     ],
     "globals": {
@@ -20,7 +20,7 @@
     },
     "settings": {
       "react": {
-       "version": "detect"
+       "version": "latest"
       }
     },
     "plugins": [
@@ -28,10 +28,8 @@
     ],
     "rules": {
     "semi": [2, "always"],
-    "space-before-function-paren": [0],
+    "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
     "camelcase": 0,
-    "no-return-assign": 0,
-    "react/jsx-uses-react": "off", // No longer needed in React 17+
-    "react/jsx-uses-vars": "error" // Ensure JSX components are recognized
+    "no-return-assign": 0
     }
   }
