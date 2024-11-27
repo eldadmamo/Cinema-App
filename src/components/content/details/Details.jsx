@@ -1,11 +1,10 @@
 import Rating from '../rating/Rating';
-
 import '../details/Details.scss';
 import Tabs from './tabs/Tabs';
-import Overview from './overview/OverView';
 import Crew from './crew/Crew';
 import Media from './media/Media';
 import Reviews from './reviews/Reviews';
+import Overviewing from './overviewing/Overviewing';
 
 const Details = () => {
   return (
@@ -45,7 +44,7 @@ const Details = () => {
               </div>
               <Tabs>
                 <div label="Overview">
-                  <Overview />
+                  <Overviewing />
                 </div>
                 <div label="Crew">
                   <Crew />
