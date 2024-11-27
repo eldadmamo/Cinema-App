@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Overview.scss';
 
-const Overview = () => {
+const Overviewing = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -109,4 +109,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default Overviewing;
