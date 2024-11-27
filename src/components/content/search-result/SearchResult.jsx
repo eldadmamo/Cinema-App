@@ -3,7 +3,7 @@ import '../../grid/Grids.scss';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { IMAGE_URL } from '../../../services/movies.service';
 import LazyImage from '../../lazy-image/LazyImage';
 

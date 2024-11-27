@@ -25,7 +25,7 @@ const Home = (props) => {
   useEffect(() => {
     setResponsePageNumber(currentPage, totalPages);
     // loadMoreMovies('now_playing',currentPage);
-  }, [currentPage, totalPages]);
+  }, [currentPage, totalPages, setResponsePageNumber]);
 
   const fetchData = () => {
     let pageNumber = currentPage;
@@ -48,13 +48,11 @@ const Home = (props) => {
 
   return (
     <div className="main" ref={mainRef} onScroll={() => handleScroll()}>
-      {loading
-        ? (
+      {loading ? (
         <Spinner />
-          )
-        : (
+      ) : (
         <>{searchResult && searchResult.length === 0 ? <MainContent /> : <SearchResult />}</>
-          )}
+      )}
       <div ref={bottomLineRef}></div>
     </div>
   );
@@ -78,4 +76,7 @@ const mapStateToProps = (state) => ({
   searchResult: state.movies.searchResult
 });
 
-export default connect(mapStateToProps, { loadMoreMovies, setResponsePageNumber })(Home);
+export default connect(mapStateToProps, {
+  loadMoreMovies,
+  setResponsePageNumber
+})(Home);

@@ -56,7 +56,7 @@ const Header = (props) => {
   useEffect(() => {
     getMovies(type, page);
     setResponsePageNumber(page, totalPages);
-  }, [type]);
+  }, [type, getMovies, page, setResponsePageNumber, totalPages]);
 
   const setMovieTypeUrl = (type) => {
     setType(type);
