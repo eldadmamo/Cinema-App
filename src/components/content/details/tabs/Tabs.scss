@@ -1,0 +1,59 @@
+.tabs {
+    text-align: left;
+  }
+  
+  .tab-list {
+    padding-left: 0;
+    display: flex; /* Added for alignment */
+    flex-wrap: wrap; /* Ensures tabs wrap in smaller viewports */
+    gap: 10px; /* Space between tabs */
+  }
+  
+  .tab-list-item {
+    display: inline-block;
+    list-style: none;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: #abb7c4;
+    padding: 10px 15px; /* Better spacing for click areas */
+    margin-right: 20px;
+    border: none;
+    cursor: pointer; /* Adds interactivity hint */
+    transition: color 0.3s, border-bottom 0.3s; /* Smooth transitions */
+  }
+  
+  
+  .tab-list-active {
+    color: #dcf836;
+    border-bottom: 3px solid #dcf836;
+  }
+  
+  @media (max-width: 700px) {
+    .tab-list {
+      flex-direction: column; /* Stack items vertically */
+      align-items: flex-start; /* Align items to the left */
+    }
+  
+    .tab-list-item {
+      display: block;
+      text-align: left;
+      margin-right: 0; /* Remove horizontal margin */
+      margin-bottom: 10px; /* Add spacing for stacked items */
+    }
+  
+    .tab-list-active {
+      color: #dcf836;
+      border-bottom: none;
+    }
+  }
+  
+  /* Handle text overflow for long tab labels */
+  .tab-list-item {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis to overflowing text */
+  }
+
+  
