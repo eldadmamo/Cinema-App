@@ -1,29 +1,54 @@
-import { Provider } from 'react-redux';
 import './App.scss';
-import store from './redux/store';
+import PropTypes from 'prop-types';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Details from './components/content/details/Details';
-import ErrorPage from './components/error/ErrorPage';
+import ErrorBoundary from './components/error/ErrorBoundary';
+import { connect } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { appRoutes } from './redux/actions/routes';
+import { AppRoutes } from './routes';
 
-const App = () => {
+const App = (props) => {
+  const { appRoutes } = props;
+
+  const routesArray = useMemo(
+    () => [
+      {
+        id: 1,
+        path: '/',
+        component: Home
+      },
+      {
+        id: 2,
+        path: '/:id/:name/details',
+        component: Details
+      }
+    ],
+    []
+  );
+
+  useEffect(() => {
+    appRoutes(routesArray);
+  }, [routesArray, appRoutes]);
+
   return (
     <>
-      <Provider store={store}>
-        <Router>
-          <Header />
-          <div className="app">
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/:id/:name/details" component={Details} />
-              <Route path="*" component={ErrorPage} />
-            </Switch>
-          </div>
-        </Router>
-      </Provider>
+      <div className="app">
+        <BrowserRouter>
+          <ErrorBoundary>
+            <Header />
+          </ErrorBoundary>
+          <AppRoutes />
+        </BrowserRouter>
+      </div>
     </>
   );
 };
 
-export default App;
+App.propTypes = {
+  appRoutes: PropTypes.func
+};
+
+export default connect(null, { appRoutes })(App);
