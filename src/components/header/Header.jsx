@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import logo from '../../assets/Cinema.jpg';
 import '../header/Header.scss';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   getMovies,
   setMovieType,
   setResponsePageNumber,
   searchQuery,
-  searchResult
+  searchResult,
+  clearMovieDetails
 } from '../../redux/actions/movies';
 
 const HEADER_LIST = [
@@ -47,23 +48,38 @@ const Header = (props) => {
     totalPages,
     setResponsePageNumber,
     searchQuery,
-    searchResult
+    searchResult,
+    clearMovieDetails
   } = props;
   let [navClass, setNavClass] = useState(false);
   let [menuClass, setMenuClass] = useState(false);
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
+  const [disableSearch, setDisableSearch] = useState(false);
 
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     getMovies(type, page);
     setResponsePageNumber(page, totalPages);
-  }, [type, getMovies, page, setResponsePageNumber, totalPages]);
+    if (location.pathname !== '/' && location.key) {
+      setDisableSearch(true);
+    }
+    // eslint-disable-next-line
+  }, [type, disableSearch, location]);
 
   const setMovieTypeUrl = (type) => {
-    setType(type);
-    setMovieType(type);
+    setDisableSearch(false);
+    if (location.pathname !== '/') {
+      clearMovieDetails();
+      history.push('/');
+      setType(type);
+      setMovieType(type);
+    } else {
+      setType(type);
+      setMovieType(type);
+    }
   };
 
   const onSearchChange = (e) => {
@@ -73,6 +89,8 @@ const Header = (props) => {
   };
 
   const navigateToMainPage = () => {
+    setDisableSearch(false);
+    clearMovieDetails();
     history.push('/');
   };
 
@@ -120,7 +138,7 @@ const Header = (props) => {
               </li>
             ))}
             <input
-              className="search-input"
+              className={`search-input ${disableSearch ? 'disabled' : ''}`}
               type="text"
               placeholder="Search for a movie"
               value={search}
@@ -139,6 +157,7 @@ Header.propTypes = {
   searchQuery: PropTypes.func,
   searchResult: PropTypes.func,
   setResponsePageNumber: PropTypes.func,
+  clearMovieDetails: PropTypes.func,
   // list: PropTypes.array,
   page: PropTypes.number,
   totalPages: PropTypes.number
@@ -154,5 +173,6 @@ export default connect(mapStateToProps, {
   setMovieType,
   setResponsePageNumber,
   searchQuery,
-  searchResult
+  searchResult,
+  clearMovieDetails
 })(Header);
