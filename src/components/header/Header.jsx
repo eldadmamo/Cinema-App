@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import logo from '../../assets/Cinema.jpg';
 import '../header/Header.scss';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import {
   getMovies,
   setMovieType,
@@ -12,6 +12,8 @@ import {
   searchResult,
   clearMovieDetails
 } from '../../redux/actions/movies';
+import { pathURL } from '../../redux/actions/routes';
+import { setError } from '../../redux/actions/error';
 
 const HEADER_LIST = [
   {
@@ -49,7 +51,13 @@ const Header = (props) => {
     setResponsePageNumber,
     searchQuery,
     searchResult,
-    clearMovieDetails
+    clearMovieDetails,
+    routesArray,
+    path,
+    url,
+    pathURL,
+    setError,
+    errors
   } = props;
   let [navClass, setNavClass] = useState(false);
   let [menuClass, setMenuClass] = useState(false);
@@ -58,28 +66,56 @@ const Header = (props) => {
   const [disableSearch, setDisableSearch] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const detailsRoute = useRouteMatch('/:id/:name/details');
+  const detailsRoute = useMatch('/:id/:name/details');
 
   useEffect(() => {
-    getMovies(type, page);
-    setResponsePageNumber(page, totalPages);
-    if (detailsRoute || location.pathname === '/') {
-      setHideHeader(true);
-    }
-
-    if (location.pathname !== '/' && location.key) {
-      setDisableSearch(true);
+    if (routesArray && routesArray.length) {
+      // Check if routesArray exists
+      if (!path && !url) {
+        pathURL('/', '/');
+        const error = new Error(
+          `Page with pathname-${location.pathname} not found with status code 404.`
+        );
+        setError({ message: `Page with pathname ${location.pathname} not found`, statusCode: 404 });
+        throw error;
+      }
     }
     // eslint-disable-next-line
-  }, [type, disableSearch, location]);
+  }, [path, url, routesArray, pathURL]);
+
+  useEffect(() => {
+    if (errors.message || errors.statusCode) {
+      pathURL('/', '/');
+      const error = new Error(`${errors.message} With status code ${errors.statusCode} `);
+      setError({ message: `Page with pathname ${location.pathname} not found.`, statusCode: 404 });
+      throw error;
+    }
+    // eslint-disable-next-line
+  }, [errors]);
+
+  useEffect(() => {
+    if (path && !errors.message && !errors.statusCode) {
+      getMovies(type, page);
+
+      setResponsePageNumber(page, totalPages);
+      if (detailsRoute || location.pathname === '/') {
+        setHideHeader(true);
+      }
+
+      if (location.pathname !== '/' && location.key) {
+        setDisableSearch(true);
+      }
+    }
+    // eslint-disable-next-line
+  }, [type, disableSearch, location, path, errors]);
 
   const setMovieTypeUrl = (type) => {
     setDisableSearch(false);
     if (location.pathname !== '/') {
       clearMovieDetails();
-      history.push('/');
+      navigate('/');
       setType(type);
       setMovieType(type);
     } else {
@@ -97,7 +133,7 @@ const Header = (props) => {
   const navigateToMainPage = () => {
     setDisableSearch(false);
     clearMovieDetails();
-    history.push('/');
+    navigate('/');
   };
 
   const toggleMenu = () => {
@@ -168,12 +204,22 @@ Header.propTypes = {
   clearMovieDetails: PropTypes.func,
   // list: PropTypes.array,
   page: PropTypes.number,
-  totalPages: PropTypes.number
+  totalPages: PropTypes.number,
+  path: PropTypes.string,
+  url: PropTypes.string,
+  routesArray: PropTypes.array,
+  pathURL: PropTypes.func,
+  setError: PropTypes.func,
+  errors: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   page: state.movies.page,
-  totalPages: state.movies.totalPages
+  totalPages: state.movies.totalPages,
+  routesArray: state.routes.routesArray,
+  path: state.routes.path,
+  url: state.routes.url,
+  errors: state.errors
 });
 
 export default connect(mapStateToProps, {
@@ -182,5 +228,7 @@ export default connect(mapStateToProps, {
   setResponsePageNumber,
   searchQuery,
   searchResult,
-  clearMovieDetails
+  clearMovieDetails,
+  pathURL,
+  setError
 })(Header);
