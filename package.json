@@ -13,11 +13,12 @@
   },
   "dependencies": {
     "@redux-devtools/core": "^4.0.0",
+    "@sentry/react": "^8.41.0",
     "axios": "^1.7.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^7.2.9",
-    "react-router-dom": "^5.3.4",
+    "react-router-dom": "^6.28.0",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
